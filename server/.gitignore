@@ -1,0 +1,10 @@
+node_modules/
+.env
+npm-debug.log*
+
+# uploaded files stay on the server, not in git
+uploads/*
+!uploads/avatars
+!uploads/posts
+!uploads/avatars/.gitkeep
+!uploads/posts/.gitkeep

@@ -1,0 +1,21 @@
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  border: 1px solid transparent; font-weight: 600; white-space: nowrap;
+  transition: transform 0.15s var(--ease), box-shadow 0.2s, background 0.2s, border-color 0.2s;
+}
+.btn--md { padding: 10px 20px; }
+.btn--sm { padding: 6px 14px; font-size: 0.875rem; }
+.btn:active:not(:disabled) { transform: scale(0.97); }
+.btn:disabled { opacity: 0.55; }
+
+/* The primary call-to-action stays pill-shaped (it's the one shape people should
+   learn to look for); secondary actions use the softer card radius instead, so
+   the two are never visually interchangeable. */
+.btn--primary { border-radius: 999px; background: linear-gradient(135deg, var(--emerald), #2fcf8f); color: #04130D; }
+.btn--primary:hover:not(:disabled) { box-shadow: var(--glow), 0 4px 18px rgba(67, 230, 165, 0.28); color: #04130D; }
+
+.btn--ghost { border-radius: var(--radius-sm); background: rgba(143, 255, 199, 0.06); border-color: var(--line-strong); color: var(--text); }
+.btn--ghost:hover:not(:disabled) { background: rgba(143, 255, 199, 0.13); color: var(--text); }
+
+.btn--danger { border-radius: var(--radius-sm); background: rgba(255, 107, 122, 0.12); border-color: rgba(255, 107, 122, 0.45); color: var(--like); }
+.btn--danger:hover:not(:disabled) { background: rgba(255, 107, 122, 0.22); }

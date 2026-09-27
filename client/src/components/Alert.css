@@ -1,0 +1,4 @@
+.alert { display: flex; align-items: flex-start; gap: 10px; padding: 10px 14px; border-radius: var(--radius-sm); font-size: 0.9rem; }
+.alert svg { margin-top: 2px; flex-shrink: 0; }
+.alert--error { background: rgba(255, 107, 122, 0.1); border: 1px solid rgba(255, 107, 122, 0.4); color: #ffb3bb; }
+.alert--success { background: rgba(67, 230, 165, 0.1); border: 1px solid var(--line-strong); color: var(--mint); }

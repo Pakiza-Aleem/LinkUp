@@ -1,0 +1,38 @@
+.auth-aside { display: flex; flex-direction: column; gap: 18px; }
+.auth-aside h2 { font-size: 2.5rem; line-height: 1.12; letter-spacing: -0.03em; font-weight: 750; max-width: 12ch; }
+.auth-aside p { color: var(--text-2); max-width: 42ch; font-size: 1.05rem; }
+
+.network-graphic { width: 100%; max-width: 340px; height: auto; margin: 4px 0; }
+.network-graphic__edge { stroke-dasharray: 4; opacity: 0; animation: draw-edge 0.6s ease-out forwards; }
+.network-graphic__node { opacity: 0; transform-box: fill-box; transform-origin: center; animation: pop 0.5s var(--ease) forwards; }
+@keyframes draw-edge { from { opacity: 0; } to { opacity: 1; } }
+
+/* Staggered entrance: each line/dot is a little later than the one before it,
+   driven entirely by document order (no per-element inline styles needed). */
+.network-graphic__edge:nth-of-type(1) { animation-delay: 0s; }
+.network-graphic__edge:nth-of-type(2) { animation-delay: 0.09s; }
+.network-graphic__edge:nth-of-type(3) { animation-delay: 0.18s; }
+.network-graphic__edge:nth-of-type(4) { animation-delay: 0.27s; }
+.network-graphic__edge:nth-of-type(5) { animation-delay: 0.36s; }
+.network-graphic__edge:nth-of-type(6) { animation-delay: 0.45s; }
+.network-graphic__edge:nth-of-type(7) { animation-delay: 0.54s; }
+.network-graphic__edge:nth-of-type(8) { animation-delay: 0.63s; }
+.network-graphic__edge:nth-of-type(9) { animation-delay: 0.72s; }
+.network-graphic__edge:nth-of-type(10) { animation-delay: 0.81s; }
+.network-graphic__node:nth-of-type(1) { animation-delay: 0.1s; }
+.network-graphic__node:nth-of-type(2) { animation-delay: 0.22s; }
+.network-graphic__node:nth-of-type(3) { animation-delay: 0.34s; }
+.network-graphic__node:nth-of-type(4) { animation-delay: 0.46s; }
+.network-graphic__node:nth-of-type(5) { animation-delay: 0.58s; }
+.network-graphic__node:nth-of-type(6) { animation-delay: 0.7s; }
+.network-graphic__node:nth-of-type(7) { animation-delay: 0.82s; }
+.network-graphic__node:nth-of-type(8) { animation-delay: 0.94s; }
+
+.auth-aside__stats { display: flex; gap: 10px; flex-wrap: wrap; }
+.auth-aside__stats > div { padding: 10px 14px; border-radius: var(--radius-sm); background: rgba(6, 17, 13, 0.4); border: 1px solid var(--line); }
+.auth-aside__stats dt { font-size: 0.75rem; color: var(--emerald); font-weight: 700; }
+.auth-aside__stats dd { margin: 2px 0 0; color: var(--text); font-size: 0.9rem; }
+
+@media (max-width: 820px) {
+  .auth-aside { display: none; }
+}

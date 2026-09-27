@@ -1,0 +1,14 @@
+.splash { position: fixed; inset: 0; z-index: 500; display: grid; place-items: center; background: var(--bg); transition: opacity 0.5s var(--ease), transform 0.5s var(--ease); }
+.splash--leaving { opacity: 0; transform: scale(1.03); pointer-events: none; }
+.splash__glow { position: absolute; width: min(70vw, 560px); aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle, rgba(67, 230, 165, 0.32), transparent 65%); animation: breathe 3s ease-in-out infinite; }
+.splash__card { position: relative; display: flex; flex-direction: column; align-items: center; gap: 14px; padding: 40px 56px; }
+.splash__title { font-size: 2rem; font-weight: 800; letter-spacing: 0.3em; margin-right: -0.3em; }
+.splash__tagline { color: var(--text-2); letter-spacing: 0.04em; }
+.splash__bar { width: 140px; height: 3px; border-radius: 3px; background: rgba(143, 255, 199, 0.14); overflow: hidden; margin-top: 8px; }
+.splash__bar span { display: block; height: 100%; width: 40%; border-radius: 3px; background: linear-gradient(90deg, transparent, var(--emerald), var(--mint)); animation: load-bar 1.2s ease-in-out infinite; }
+@keyframes breathe { 50% { transform: scale(1.12); opacity: 0.75; } }
+@keyframes load-bar { from { transform: translateX(-100%); } to { transform: translateX(350%); } }
+
+@media (max-width: 420px) {
+  .splash__card { padding: 32px 36px; }
+}

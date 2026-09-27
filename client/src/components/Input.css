@@ -1,0 +1,31 @@
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field label { font-size: 0.85rem; font-weight: 550; color: var(--text-2); }
+
+input[type='text'], input[type='email'], input[type='password'], input[type='url'], input[type='search'], textarea {
+  width: 100%; padding: 11px 14px; border-radius: var(--radius-sm);
+  border: 1px solid var(--line-strong); background: rgba(6, 17, 13, 0.7); color: var(--text);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+textarea { resize: vertical; min-height: 84px; }
+input::placeholder, textarea::placeholder { color: #6f857b; }
+input:focus, textarea:focus { outline: none; border-color: var(--emerald); box-shadow: 0 0 0 3px rgba(67, 230, 165, 0.18); }
+input[aria-invalid='true'], textarea[aria-invalid='true'] { border-color: var(--like); }
+
+/* Chrome/Edge/Safari paint their own white background + black text on any
+   field they recognise for autofill (email, username, password), which
+   overrides our --background entirely. This forces our dark surface and
+   text color back, using the delayed-transition trick since -webkit-autofill
+   backgrounds can't be overridden with plain background-color. */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-text-fill-color: var(--text);
+  -webkit-box-shadow: 0 0 0 1000px rgba(6, 17, 13, 0.85) inset;
+  box-shadow: 0 0 0 1000px rgba(6, 17, 13, 0.85) inset;
+  caret-color: var(--text);
+  transition: background-color 9999s ease-in-out 0s, color 9999s ease-in-out 0s;
+}
+
+.field__hint { font-size: 0.8rem; color: var(--text-2); }
+.field__error { font-size: 0.82rem; color: var(--like); }

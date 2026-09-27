@@ -1,0 +1,6 @@
+.spinner-wrap { display: inline-flex; padding: 6px; }
+.spinner {
+  display: inline-block; border-radius: 50%;
+  border: 2.5px solid rgba(143, 255, 199, 0.18); border-top-color: var(--emerald);
+  animation: spin 0.8s linear infinite;
+}

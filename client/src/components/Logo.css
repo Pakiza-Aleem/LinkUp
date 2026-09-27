@@ -1,0 +1,8 @@
+.logo { display: inline-flex; align-items: center; gap: 10px; }
+.logo__mark { filter: drop-shadow(0 0 10px rgba(67, 230, 165, 0.35)); flex-shrink: 0; }
+.logo__text { font-weight: 800; letter-spacing: 0.16em; font-size: 1.05rem; color: var(--text); }
+
+.logo__mark--animated .logo__path { stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw 0.9s var(--ease) forwards; }
+.logo__mark--animated .logo__path--u { animation-delay: 0.35s; }
+.logo__mark--animated .logo__dot { transform-box: fill-box; transform-origin: center; opacity: 0; animation: pop 0.4s var(--ease) 1s forwards; }
+@keyframes draw { to { stroke-dashoffset: 0; } }
