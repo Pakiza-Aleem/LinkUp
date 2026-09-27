@@ -10,7 +10,6 @@ const User = require('./models/User');
 const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
 const postRoutes = require('./routes/postRoutes');
-
 const {
   postCommentsRouter,
   commentRouter
@@ -28,17 +27,22 @@ const {
 
 const seedDatabase = require('./seed');
 
-const app = express();
-
 // ------------------------------------
-// Environment variables
+// Check required environment variables
 // ------------------------------------
 
 if (!process.env.MONGO_URI || !process.env.JWT_SECRET) {
   console.error(
     'Missing MONGO_URI or JWT_SECRET environment variables.'
   );
+  process.exit(1);
 }
+
+// ------------------------------------
+// Create Express app
+// ------------------------------------
+
+const app = express();
 
 // ------------------------------------
 // Middleware
@@ -53,11 +57,10 @@ app.use(
 
 app.use(express.json());
 
-// Local uploads for development
-// NOTE: For Vercel production, use Cloudinary or another
-// persistent storage service for uploaded images.
+// Create upload folders for local development
 ensureUploadDirs();
 
+// Serve uploaded files
 app.use('/uploads', express.static(UPLOAD_ROOT));
 
 // ------------------------------------
@@ -72,7 +75,7 @@ app.get('/api/health', (req, res) => {
 });
 
 // ------------------------------------
-// Routes
+// API Routes
 // ------------------------------------
 
 app.use('/api/auth', authRoutes);
@@ -93,21 +96,23 @@ app.use('/api/comments', commentRouter);
 // ------------------------------------
 
 app.use(notFound);
-
 app.use(errorHandler);
 
 // ------------------------------------
-// MongoDB connection
+// Railway PORT
 // ------------------------------------
 
-let dbConnected = false;
+const PORT = process.env.PORT || 5000;
 
-const connectDatabase = async () => {
-  if (!dbConnected) {
+// ------------------------------------
+// Start server
+// ------------------------------------
+
+const startServer = async () => {
+  try {
     await connectDB();
-    dbConnected = true;
 
-    // Seed only when explicitly enabled.
+    // Seed demo data only when enabled
     if (process.env.SEED_DATABASE === 'true') {
       const userCount = await User.countDocuments();
 
@@ -116,22 +121,15 @@ const connectDatabase = async () => {
         await seedDatabase();
       }
     }
-  }
-};
 
-// ------------------------------------
-// Vercel serverless handler
-// ------------------------------------
-
-module.exports = async (req, res) => {
-  try {
-    await connectDatabase();
-    return app(req, res);
-  } catch (error) {
-    console.error('Server error:', error);
-
-    return res.status(500).json({
-      message: 'Server error'
+    app.listen(PORT, '0.0.0.0', () => {
+      console.log(`Link Up API running on port ${PORT}`);
     });
+
+  } catch (error) {
+    console.error('Failed to start server:', error);
+    process.exit(1);
   }
 };
+
+startServer();
