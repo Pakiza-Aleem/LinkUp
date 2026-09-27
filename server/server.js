@@ -10,6 +10,7 @@ const User = require('./models/User');
 const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
 const postRoutes = require('./routes/postRoutes');
+
 const {
   postCommentsRouter,
   commentRouter
@@ -32,9 +33,7 @@ const seedDatabase = require('./seed');
 // ------------------------------------
 
 if (!process.env.MONGO_URI || !process.env.JWT_SECRET) {
-  console.error(
-    'Missing MONGO_URI or JWT_SECRET environment variables.'
-  );
+  console.error('Missing MONGO_URI or JWT_SECRET.');
   process.exit(1);
 }
 
@@ -57,11 +56,20 @@ app.use(
 
 app.use(express.json());
 
-// Create upload folders for local development
 ensureUploadDirs();
 
-// Serve uploaded files
 app.use('/uploads', express.static(UPLOAD_ROOT));
+
+// ------------------------------------
+// Root route
+// ------------------------------------
+
+app.get('/', (req, res) => {
+  res.json({
+    status: 'ok',
+    message: 'Link Up API is running'
+  });
+});
 
 // ------------------------------------
 // Health check
@@ -75,7 +83,7 @@ app.get('/api/health', (req, res) => {
 });
 
 // ------------------------------------
-// API Routes
+// API routes
 // ------------------------------------
 
 app.use('/api/auth', authRoutes);
@@ -99,37 +107,29 @@ app.use(notFound);
 app.use(errorHandler);
 
 // ------------------------------------
-// Railway PORT
+// Start server
 // ------------------------------------
 
 const PORT = process.env.PORT || 5000;
 
-// ------------------------------------
-// Start server
-// ------------------------------------
+connectDB()
+  .then(async () => {
 
-const startServer = async () => {
-  try {
-    await connectDB();
+    // Add demo data if database is empty
+    const userCount = await User.countDocuments();
 
-    // Seed demo data only when enabled
-    if (process.env.SEED_DATABASE === 'true') {
-      const userCount = await User.countDocuments();
-
-      if (userCount === 0) {
-        console.log('No users found, adding demo data...');
-        await seedDatabase();
-      }
+    if (userCount === 0) {
+      console.log('No users found, adding demo data...');
+      await seedDatabase();
     }
 
-    app.listen(PORT, '0.0.0.0', () => {
+    app.listen(PORT, () => {
       console.log(`Link Up API running on port ${PORT}`);
     });
 
-  } catch (error) {
-    console.error('Failed to start server:', error);
+  })
+  .catch((error) => {
+    console.error('Failed to start server:');
+    console.error(error);
     process.exit(1);
-  }
-};
-
-startServer();
+  });
